@@ -22,7 +22,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 5) Confirm you can perform a JWT-based auth: `sfdx force:auth:jwt:grant --clientid <your_consumer_key> --jwtkeyfile server.key --username <your_username> --setdefaultdevhubusername`
 
-   **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
+    **Note:** For more info on setting up JWT-based auth see [Authorize an Org Using the JWT-Based Flow](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_jwt_flow.htm) in the [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev).
 
 6) From your JWT-Based connected app on Salesforce, retrieve the generated `Consumer Key`.
 
@@ -30,7 +30,7 @@ If any any of these assumptions aren't true, the following steps won't work.
 
     Create a plan variable named `SF_CONSUMER_KEY`.
 
-    Create an plan variable named `SF_USERNAME`.
+    Create a plan variable named `SF_USERNAME`.
 
 8) Encrypt your `server.key` file that you generated previously and add the encrypted file (`server.key.enc`) to the folder named `assets`.
 
@@ -38,21 +38,23 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 9) Setup Bamboo [plan variable](https://confluence.atlassian.com/bamboo/defining-plan-variables-289276859.html) for the password you used to encrypt your `server.key` file.
 
-    Create an plan variable named `SERVER_KEY_PASSWORD`.
-	
-10) Create the sample package running this command:
+    Create a plan variable named `SERVER_KEY_PASSWORD`.
+
+10) Copy all the contents of `package-sfdx-project.json` into `sfdx-project.json` and save.
+
+11) Create the sample package running this command:
 
     `sfdx force:package:create --path force-app/main/default/ --name "Bamboo" --description "Bamboo Package Example" --packagetype Unlocked`
 
-11) Create the first package version.
+12) Create the first package version.
 
     `sfdx force:package:version:create --package "Bamboo" --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg`
 
-12) In the `build.sh` file update the value in the `PACKAGENAME` variable to be Package Id in your sfdx-project.json file.  This id will start with `0Ho`.
+13) In the `build.sh` file update the value in the `PACKAGENAME` variable to be Package Id in your `sfdx-project.json` file.  This id will start with `0Ho`.
 
-13) Commit the updated `sfdx-project.json` and `build.sh` files.
+14) Commit the updated `sfdx-project.json` and `build.sh` files.
 
-14) Create a Bamboo plan with the `build.sh` included in the root directory of the git repository.
+15) Create a Bamboo plan with the `build.sh` included in the root directory of the git repository.
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Bamboo build.
 
