@@ -54,7 +54,12 @@ If any any of these assumptions aren't true, the following steps won't work.
 
 14) Commit the updated `sfdx-project.json` and `build.sh` files.
 
-15) Create a Bamboo plan with the `build.sh` included in the root directory of the git repository.
+15) Create a Bamboo plan with the build file for your operating system selected (`build.bat` for Windows and `build.sh` for all others). The build files are included in the root directory of the git repository.
+
+16) If you're on Windows, you'll need to install the [Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm) and [jq](https://stedolan.github.io/jq/download/). Make sure the jq executable is on the path.
+
+
+https://stedolan.github.io/jq/download/
 
 And you should be ready to go! Now when you commit and push a change, your change will kick off a Bamboo build.
 
