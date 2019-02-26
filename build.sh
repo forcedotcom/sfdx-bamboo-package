@@ -1,5 +1,5 @@
 #
-# Download the SFDX CLI and install it
+# Download Salesforce CLI and install it
 #
 
 # Decrypt server key
@@ -17,19 +17,15 @@ export TESTLEVEL=RunLocalTests
 export PACKAGENAME=0Ho1U000000CaUzSAK
 export PACKAGEVERSION=""
 
-# Install SFDX
+# Install CLI
 mkdir sfdx
 wget -qO- $CLIURL | tar xJ -C sfdx --strip-components 1
 "./sfdx/install"
 export PATH=./sfdx/$(pwd):$PATH
 
-# Output SFDX version and plugin information
+# Output CLI version and plug-in information
 sfdx --version
 sfdx plugins --core
-
-#
-# Deploy metadata to Salesforce
-#
 
 # Authenticate to Salesforce using server key
 sfdx force:auth:jwt:grant --clientid $bamboo_SF_CONSUMER_KEY --jwtkeyfile assets/server.key --username $bamboo_SF_USERNAME --setdefaultdevhubusername --setalias HubOrg
