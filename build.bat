@@ -1,5 +1,5 @@
 REM
-REM Download the SFDX CLI and install it
+REM Download Salesforce CLI and install it
 REM
 
 REM Decrypt server key
@@ -16,7 +16,7 @@ set TESTLEVEL="RunLocalTests"
 set PACKAGENAME="0Ho1U000000CaUzSAK"
 set PACKAGEVERSION=""
 
-REM Output SFDX version and plugin information
+REM Output CLI version and plug-in information
 sfdx --version
 sfdx plugins --core
 
@@ -24,7 +24,7 @@ REM
 REM Deploy metadata to Salesforce
 REM
 
-REM Authenticate to Salesforce using server key
+REM Authenticate to Salesforce using the server key
 sfdx force:auth:jwt:grant --clientid %bamboo_SF_CONSUMER_KEY% --jwtkeyfile assets/server.key --username %bamboo_SF_USERNAME% --setdefaultdevhubusername --setalias HubOrg
 
 REM Create scratch org
@@ -34,7 +34,7 @@ sfdx force:org:display --targetusername ciorg
 REM Push source to scratch org
 sfdx force:source:push --targetusername ciorg
 
-REM Run unit tests in scratch org
+REM Run unit tests in the scratch org
 sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel %TESTLEVEL%
 
 REM Delete scratch org
@@ -43,7 +43,7 @@ sfdx force:org:delete --targetusername ciorg --noprompt
 REM Create package version
 for /f "delims=" %%a in ('sfdx force:package:version:create --package %PACKAGENAME% --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg | jq '.result.SubscriberPackageVersionId'') do @set PACKAGEVERSION=%%a
 
-REM Wait for package replication.
+REM Wait for package replication
 sleep 300
 echo $PACKAGEVERSION
 
