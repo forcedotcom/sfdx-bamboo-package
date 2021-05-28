@@ -3,7 +3,7 @@
 #
 
 # Setup SFDX environment variables
-export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz  
+export CLIURL=https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-amd64.tar.xz
 export SFDX_AUTOUPDATE_DISABLE=false
 export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 export SFDX_DOMAIN_RETRY=300
@@ -30,7 +30,7 @@ openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server
 
 
 # Authenticate to Salesforce using server key
-sfdx force:auth:jwt:grant --clientid $bamboo_SF_CONSUMER_KEY --jwtkeyfile assets/server.key --username $bamboo_SF_USERNAME --setdefaultdevhubusername --setalias HubOrg
+sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile assets/server.key --username $USER_NAME --setdefaultdevhubusername --setalias HubOrg
 
 # Create scratch org
 sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
