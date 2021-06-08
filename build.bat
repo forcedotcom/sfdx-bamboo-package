@@ -3,7 +3,7 @@ REM Download Salesforce CLI and install it
 REM
 
 REM Decrypt server key
-openssl aes-256-cbc -d -md md5 -in assets/server.key.enc -out assets/server.key -k %bamboo_SERVER_KEY_PASSWORD%
+openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -base64 -K %DECRYPTION_KEY% -iv %DECRYPTION_IV%
 
 REM Setup SFDX environment variables
 set SFDX_AUTOUPDATE_DISABLE="false"
@@ -25,7 +25,7 @@ REM Deploy metadata to Salesforce
 REM
 
 REM Authenticate to Salesforce using the server key
-sfdx force:auth:jwt:grant --clientid %bamboo_SF_CONSUMER_KEY% --jwtkeyfile assets/server.key --username %bamboo_SF_USERNAME% --setdefaultdevhubusername --setalias HubOrg
+sfdx force:auth:jwt:grant --clientid %CONSUMER_KEY% --jwtkeyfile assets/server.key --username %USER_NAME% --setdefaultdevhubusername --setalias HubOrg
 
 REM Create scratch org
 sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1
